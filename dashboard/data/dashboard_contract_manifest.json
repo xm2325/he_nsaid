@@ -51,5 +51,19 @@
     10.0
   ],
   "scope": "Python formula-engine outputs for dynamic Python and R dashboard scenario calculations.",
-  "intervention_layer": "Transparent proportional avoided-burden scenario calculation: uptake multiplied by effectiveness."
+  "streamlit_default_analysis_view": "Article base-case reproduction",
+  "streamlit_default_calculation_mode": "Live Python state-transition models",
+  "article_base_case_defaults": {
+    "time_horizon_years": 10.0,
+    "hpe_exposure_duration_years": 10.0,
+    "discount_rate_costs": 0.035,
+    "discount_rate_qalys": 0.035,
+    "perspective": "English NHS",
+    "cost_year": "2020-21",
+    "population": "English population registered with a GP",
+    "population_size": 63049603,
+    "effects_assumption": "additive",
+    "published_psa_samples": 10000
+  },
+  "intervention_layer": "Optional transparent proportional avoided-burden scenario calculation: uptake multiplied by effectiveness."
 }
