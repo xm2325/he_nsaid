@@ -1,0 +1,13 @@
+{
+  "source_pdf": "sources/nsaid_2024_main_article_bmj_e077880.pdf",
+  "source_page_1_based": 7,
+  "render_dpi": 200,
+  "crop_box_pixels": [
+    80,
+    150,
+    940,
+    970
+  ],
+  "method": "blue-pixel detection near quarter-year marker locations",
+  "scientific_scope": "digitised published-figure reconstruction; not an independent model recalculation"
+}

@@ -1,0 +1,13 @@
+scenario,metric,nsaid_older_no_gastro,nsaid_peptic_ulcer_no_gastro,nsaid_oral_anticoagulant,nsaid_heart_failure,nsaid_chronic_kidney_disease,total,unit,source_page
+base_case,total_cost_impact,2.46,0.16,25.41,0.13,3.27,31.43,GBP_millions,5
+base_case,total_qaly_impact,-1929,-114,-2143,-411,-1738,-6335,QALYs,5
+five_year_period,total_cost_impact,2.39,0.16,16.12,0.59,4.36,23.62,GBP_millions,5
+five_year_period,total_qaly_impact,-1597,-98,-832,-304,-688,-3518,QALYs,5
+twenty_year_period,total_cost_impact,2.44,0.16,31.11,-0.07,-5.11,28.53,GBP_millions,5
+twenty_year_period,total_qaly_impact,-2273,-129,-3560,-449,-2587,-8998,QALYs,5
+zero_discount_rate,total_cost_impact,2.57,0.17,28.97,-0.09,3.20,34.82,GBP_millions,5
+zero_discount_rate,total_qaly_impact,-2095,-123,-2571,-473,-2160,-7423,QALYs,5
+minimise_overlap,total_cost_impact,1.37,0.16,24.79,0.14,3.31,29.78,GBP_millions,5
+minimise_overlap,total_qaly_impact,-1065,-114,-2094,-408,-1739,-5420,QALYs,5
+weighted_average_nsaids,total_cost_impact,2.45,0.16,27.02,-0.25,1.31,30.68,GBP_millions,5
+weighted_average_nsaids,total_qaly_impact,-1930,-114,-2145,-519,-1756,-6464,QALYs,5

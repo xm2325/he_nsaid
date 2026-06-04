@@ -1,0 +1,11 @@
+#!/usr/bin/env Rscript
+source(file.path("r", "R", "contract_runner.R"))
+contracts <- read_contracts(file.path("r", "data"))
+res <- run_all_deterministic(contracts, output_dir = file.path("outputs_r", "deterministic_test"))
+psa <- run_psa_reaggregation(contracts, output_dir = file.path("outputs_r", "psa_test"))
+stopifnot(max(res$trace_validation$max_absolute_trace_error) < 1e-12)
+stopifnot(max(abs(res$summary_validation$absolute_error)) < 1e-9)
+stopifnot(psa$n_iterations == 1000)
+stopifnot(psa$max_abs_cost_difference_vs_python < 1e-4)
+stopifnot(psa$max_abs_qaly_difference_vs_python < 1e-8)
+cat("R contract runner tests passed\n")

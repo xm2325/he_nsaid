@@ -1,0 +1,109 @@
+model_id,arm,state_index,state,probability
+A,HPE,1,Well no HPE,0.0
+A,HPE,2,Well with HPE,1.0
+A,HPE,3,GI discomfort,0.0
+A,HPE,4,Unresolved GI discomfort,0.0
+A,HPE,5,Symptomatic ulcer,0.0
+A,HPE,6,Unresolved ulcer,0.0
+A,HPE,7,Serious GI event,0.0
+A,HPE,8,Unresolved serious GI event,0.0
+A,HPE,9,Post-event,0.0
+A,HPE,10,Dead,0.0
+A,No HPE,1,Well no HPE,1.0
+A,No HPE,2,Well with HPE,0.0
+A,No HPE,3,GI discomfort,0.0
+A,No HPE,4,Unresolved GI discomfort,0.0
+A,No HPE,5,Symptomatic ulcer,0.0
+A,No HPE,6,Unresolved ulcer,0.0
+A,No HPE,7,Serious GI event,0.0
+A,No HPE,8,Unresolved serious GI event,0.0
+A,No HPE,9,Post-event,0.0
+A,No HPE,10,Dead,0.0
+B,HPE,1,Well no HPE,0.0
+B,HPE,2,Well with HPE,1.0
+B,HPE,3,GI discomfort,0.0
+B,HPE,4,Unresolved GI discomfort,0.0
+B,HPE,5,Symptomatic ulcer,0.0
+B,HPE,6,Unresolved ulcer,0.0
+B,HPE,7,Serious GI event,0.0
+B,HPE,8,Unresolved serious GI event,0.0
+B,HPE,9,Post-event,0.0
+B,HPE,10,Dead,0.0
+B,No HPE,1,Well no HPE,1.0
+B,No HPE,2,Well with HPE,0.0
+B,No HPE,3,GI discomfort,0.0
+B,No HPE,4,Unresolved GI discomfort,0.0
+B,No HPE,5,Symptomatic ulcer,0.0
+B,No HPE,6,Unresolved ulcer,0.0
+B,No HPE,7,Serious GI event,0.0
+B,No HPE,8,Unresolved serious GI event,0.0
+B,No HPE,9,Post-event,0.0
+B,No HPE,10,Dead,0.0
+C,HPE,1,Well no HPE,0.0
+C,HPE,2,Well with HPE,1.0
+C,HPE,3,GI discomfort,0.0
+C,HPE,4,Unresolved GI discomfort,0.0
+C,HPE,5,Symptomatic ulcer,0.0
+C,HPE,6,Unresolved ulcer,0.0
+C,HPE,7,Serious GI event,0.0
+C,HPE,8,Unresolved serious GI event,0.0
+C,HPE,9,Post-GI event,0.0
+C,HPE,10,Stroke,0.0
+C,HPE,11,Recurrent stroke,0.0
+C,HPE,12,Post-stroke,0.0
+C,HPE,13,Dead,0.0
+C,No HPE,1,Well no HPE,1.0
+C,No HPE,2,Well with HPE,0.0
+C,No HPE,3,GI discomfort,0.0
+C,No HPE,4,Unresolved GI discomfort,0.0
+C,No HPE,5,Symptomatic ulcer,0.0
+C,No HPE,6,Unresolved ulcer,0.0
+C,No HPE,7,Serious GI event,0.0
+C,No HPE,8,Unresolved serious GI event,0.0
+C,No HPE,9,Post-GI event,0.0
+C,No HPE,10,Stroke,0.0
+C,No HPE,11,Recurrent stroke,0.0
+C,No HPE,12,Post-stroke,0.0
+C,No HPE,13,Dead,0.0
+D,HPE,1,HF no HPE,0.0
+D,HPE,2,PCE no HPE,0.0
+D,HPE,3,SCE no HPE,0.0
+D,HPE,4,HF w HPE,1.0
+D,HPE,5,PCE w HPE,0.0
+D,HPE,6,SCE w HPE,0.0
+D,HPE,7,HF post event no HPE,0.0
+D,HPE,8,HF post event w HPE,0.0
+D,HPE,9,Dead,0.0
+D,No HPE,1,HF no HPE,1.0
+D,No HPE,2,PCE no HPE,0.0
+D,No HPE,3,SCE no HPE,0.0
+D,No HPE,4,HF w HPE,0.0
+D,No HPE,5,PCE w HPE,0.0
+D,No HPE,6,SCE w HPE,0.0
+D,No HPE,7,HF post event no HPE,0.0
+D,No HPE,8,HF post event w HPE,0.0
+D,No HPE,9,Dead,0.0
+E,HPE,1,No event no NSAID,0.0
+E,HPE,2,No event + NSAID,1.0
+E,HPE,3,Primary care AKI,0.0
+E,HPE,4,Secondary care AKI (no RRT),0.0
+E,HPE,5,Secondary care AKI (with RRT),0.0
+E,HPE,6,Post-event CKD stage 3b-4,0.0
+E,HPE,7,ESRD,0.0
+E,HPE,8,ESRD+RRT,0.0
+E,HPE,9,Transplant,0.0
+E,HPE,10,Post-transplant,0.0
+E,HPE,11,Dead (AKI),0.0
+E,HPE,12,Dead (other),0.0
+E,No HPE,1,No event no NSAID,1.0
+E,No HPE,2,No event + NSAID,0.0
+E,No HPE,3,Primary care AKI,0.0
+E,No HPE,4,Secondary care AKI (no RRT),0.0
+E,No HPE,5,Secondary care AKI (with RRT),0.0
+E,No HPE,6,Post-event CKD stage 3b-4,0.0
+E,No HPE,7,ESRD,0.0
+E,No HPE,8,ESRD+RRT,0.0
+E,No HPE,9,Transplant,0.0
+E,No HPE,10,Post-transplant,0.0
+E,No HPE,11,Dead (AKI),0.0
+E,No HPE,12,Dead (other),0.0

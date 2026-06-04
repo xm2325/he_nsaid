@@ -1,0 +1,11 @@
+source,used_for,main_outputs
+sources/nsaid_2024_original_workbook_came077880.ww1.xlsm,Direct extraction of NSAID workbook outputs and PSA samples,outputs/nsaid_excel_summary_from_original_workbook.csv; outputs/nsaid_psa_samples_from_original_workbook.csv; outputs/generated_figures/generated_nsaid_psa_plane_from_xlsm.png
+sources/nsaid_2024_technical_appendix_came077880.ww2.pdf,NSAID methods and original figure crop,outputs/original_crops/original_nsaid_appendix_fig2_1_gi_structure.png; outputs/comparison_panels/compare_nsaid_appendix_fig2_1_gi_structure.png
+sources/pincer_2014_pharmacoeconomics_article.pdf,PINCER Tables 5-7 and original CE plane/CEAC crops,outputs/pincer_article_table5_model_outputs.csv; outputs/pincer_article_table6_practice_outputs.csv; outputs/pincer_article_table7_scenario_outputs.csv; outputs/comparison_panels/
+sources/pincer_2014_technical_appendix_ESM1.docx,PINCER supporting trial and model summary,Used as supporting source; no standalone numeric extraction file
+sources/pincer_2013_full_economics_report.pdf,PINCER full report Appendix 1-6 model structures and parameters; original model-structure crop,outputs/original_crops/original_pincer_report_fig3_nsaid_structure.png; outputs/comparison_panels/compare_pincer_report_fig3_nsaid_structure.png
+sources/nsaid_2024_main_article_bmj_e077880.pdf,outputs/nsaid_2024_main_figures/original_crops/original_bmj_figure1_crop.png,BMJ main article page 6 crop used for visual comparison of Figure 1.
+sources/nsaid_2024_main_article_bmj_e077880.pdf,outputs/nsaid_2024_main_figures/original_crops/original_bmj_figure2_crop.png,BMJ main article page 6 crop used for visual comparison of Figure 2.
+sources/nsaid_2024_main_article_bmj_e077880.pdf,data/nsaid_2024_figure3_digitised_points.csv,BMJ main article page 7 Figure 3 digitised into traceable approximate points.
+sources/nsaid_2024_original_workbook_came077880.ww1.xlsm,outputs/nsaid_2024_main_figures/figure1_workbook_event_counts.csv,Cached Results.Summ values redraw Figure 1.
+sources/nsaid_2024_original_workbook_came077880.ww1.xlsm,outputs/nsaid_2024_main_figures/figure2_workbook_psa_cloud.csv,Cached PSA.Outputs England-level cloud redraw Figure 2.

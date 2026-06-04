@@ -1,0 +1,17 @@
+{
+  "models": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "arms": [
+    "HPE",
+    "No HPE"
+  ],
+  "n_cycles": 40,
+  "psa_iterations": 1000,
+  "r_runner_scope": "Native R trace propagation, reward accumulation and PSA aggregation over versioned contracts exported from Python formula engines.",
+  "parameter_level_psa": false
+}

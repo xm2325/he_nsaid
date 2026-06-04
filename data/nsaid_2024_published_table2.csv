@@ -1,0 +1,6 @@
+model_id,label,hpe_cost_mean_gbp,hpe_cost_lower_gbp,hpe_cost_upper_gbp,no_hpe_cost_mean_gbp,no_hpe_cost_lower_gbp,no_hpe_cost_upper_gbp,incremental_cost_mean_gbp,incremental_cost_lower_gbp,incremental_cost_upper_gbp,hpe_qaly_mean,hpe_qaly_lower,hpe_qaly_upper,no_hpe_qaly_mean,no_hpe_qaly_lower,no_hpe_qaly_upper,incremental_qaly_mean,incremental_qaly_lower,incremental_qaly_upper,source_page
+nsaid_older_no_gastro,NSAID in older people with no gastroprotection,258,195,339,234,174,312,23,6,44,5.836,5.762,5.910,5.853,5.777,5.927,-0.017,-0.021,-0.012,4
+nsaid_peptic_ulcer_no_gastro,NSAID with previous peptic ulcer with no gastroprotection,277,209,363,253,187,337,24,6,45,6.700,6.630,6.769,6.715,6.643,6.785,-0.014,-0.019,-0.010,4
+nsaid_oral_anticoagulant,NSAID with oral anticoagulant,2526,1372,4260,1429,935,1990,1097,236,2542,4.812,4.598,5.022,4.904,4.703,5.106,-0.093,-0.176,-0.039,4
+nsaid_heart_failure,NSAID with heart failure,12607,8378,17755,12594,8374,17723,14,-71,98,2.998,2.784,3.202,3.045,2.829,3.252,-0.046,-0.071,-0.026,4
+nsaid_chronic_kidney_disease,NSAID with chronic kidney disease,50215,48342,52185,50008,48260,51803,207,-163,703,4.523,3.936,5.051,4.634,4.024,5.177,-0.111,-0.194,-0.039,4

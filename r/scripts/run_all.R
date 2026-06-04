@@ -1,0 +1,12 @@
+#!/usr/bin/env Rscript
+source(file.path("r", "R", "contract_runner.R"))
+contracts <- read_contracts(file.path("r", "data"))
+deterministic <- run_all_deterministic(contracts)
+psa <- run_psa_reaggregation(contracts)
+dir.create("outputs_r", showWarnings = FALSE, recursive = TRUE)
+write.csv(psa, file.path("outputs_r", "psa_summary.csv"), row.names = FALSE)
+cat("R deterministic and PSA contract workflows completed\n")
+cat(sprintf("Maximum R-vs-Python trace error: %.3e\n", max(deterministic$trace_validation$max_absolute_trace_error)))
+cat(sprintf("Maximum R-vs-Python summary error: %.3e\n", max(abs(deterministic$summary_validation$absolute_error))))
+cat(sprintf("Maximum R-vs-Python PSA cost error: %.3e\n", psa$max_abs_cost_difference_vs_python))
+cat(sprintf("Maximum R-vs-Python PSA QALY error: %.3e\n", psa$max_abs_qaly_difference_vs_python))
