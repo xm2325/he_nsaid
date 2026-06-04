@@ -9,7 +9,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from medsid_repro.dashboard_scenario import build_dashboard_contract
+from medsid_repro.dashboard_scenario import ARTICLE_BASE_CASE_DEFAULTS, build_dashboard_contract
 
 
 def main() -> None:
@@ -28,7 +28,10 @@ def main() -> None:
         "models": sorted(contract["model_id"].unique().tolist()),
         "duration_grid": sorted(contract["duration_years"].unique().tolist()),
         "scope": "Python formula-engine outputs for dynamic Python and R dashboard scenario calculations.",
-        "intervention_layer": "Transparent proportional avoided-burden scenario calculation: uptake multiplied by effectiveness.",
+        "streamlit_default_analysis_view": "Article base-case reproduction",
+        "streamlit_default_calculation_mode": "Live Python state-transition models",
+        "article_base_case_defaults": ARTICLE_BASE_CASE_DEFAULTS,
+        "intervention_layer": "Optional transparent proportional avoided-burden scenario calculation: uptake multiplied by effectiveness.",
     }
     for destination in [
         ROOT / "dashboard" / "data" / "dashboard_contract_manifest.json",

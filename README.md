@@ -191,3 +191,32 @@ See:
 docs/DYNAMIC_DASHBOARDS.md
 docs/DEPLOYMENT_GUIDE.md
 ```
+
+## v13 article-default Streamlit patch
+
+The Python Streamlit application now starts with:
+
+```text
+Analysis view: Article base-case reproduction
+Calculation mode: Live Python state-transition models
+Models: A--E
+Population: England scaling
+HPE exposure duration: 10 years
+```
+
+The default screen calculates the full hazardous-prescribing burden and
+compares the independent deterministic result with the published Table 3 PSA
+means. It does not apply intervention uptake, effectiveness or implementation
+cost unless the user changes to the separate illustrative intervention view.
+
+Run the article-default validation with:
+
+```bash
+python scripts/check_article_base_case.py
+```
+
+See:
+
+```text
+docs/ARTICLE_BASE_CASE_DASHBOARD.md
+```

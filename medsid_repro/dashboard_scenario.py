@@ -21,6 +21,7 @@ import pandas as pd
 from .independent_nsaid_abcde import (
     MODEL_IDS,
     MODEL_LABELS,
+    PUBLISHED_IDS,
     _load_all_inputs,
     _summarise_model,
     run_gi_trace,
@@ -258,3 +259,148 @@ def scenario_curve(
         )
         rows.append(metrics)
     return pd.DataFrame(rows)
+
+
+# Article base-case defaults reported in Camacho et al. (BMJ 2024).
+# The live Python engines read their clinical and economic inputs from the
+# public workbook. These values define the dashboard starting point and the
+# published Table 3 comparator.
+ARTICLE_BASE_CASE_DEFAULTS = {
+    "time_horizon_years": 10.0,
+    "hpe_exposure_duration_years": 10.0,
+    "discount_rate_costs": 0.035,
+    "discount_rate_qalys": 0.035,
+    "perspective": "English NHS",
+    "cost_year": "2020-21",
+    "population": "English population registered with a GP",
+    "population_size": 63_049_603,
+    "effects_assumption": "additive",
+    "published_psa_samples": 10_000,
+}
+
+
+def calculate_article_base_case_from_contract(
+    contract: pd.DataFrame,
+    duration_years: float = 10.0,
+    selected_models: Sequence[str] = tuple(MODEL_IDS),
+    model_counts: Mapping[str, float] | None = None,
+) -> tuple[Dict[str, float], pd.DataFrame, pd.DataFrame]:
+    """Calculate the article-style hazardous-prescribing burden.
+
+    This is not an intervention calculation. It returns the full incremental
+    NHS cost and QALY impact of the selected hazardous prescribing events (HPEs)
+    relative to the corresponding no-HPE arms. The implementation reuses the
+    validated contract engine with a reducible fraction of one so that the
+    original scenario layer remains available as an optional dashboard view.
+    """
+    metrics, rows, events = calculate_scenario_from_contract(
+        contract,
+        duration_years=duration_years,
+        selected_models=selected_models,
+        model_counts=model_counts,
+        uptake=1.0,
+        effectiveness=1.0,
+        implementation_cost_per_approached_hpe_gbp=0.0,
+    )
+    metrics = dict(metrics)
+    metrics.update(
+        {
+            "article_cost_impact_gbp": float(metrics["baseline_incremental_cost_gbp"]),
+            "article_qaly_impact": float(metrics["baseline_incremental_qaly"]),
+        }
+    )
+    return metrics, rows, events
+
+
+def calculate_article_base_case_live(
+    workbook_path: Path,
+    duration_years: float = 10.0,
+    selected_models: Sequence[str] = tuple(MODEL_IDS),
+    model_counts: Mapping[str, float] | None = None,
+) -> tuple[Dict[str, float], pd.DataFrame, pd.DataFrame]:
+    """Run live Python state-transition engines for an article-style burden calculation."""
+    live_contract = build_dashboard_contract(workbook_path, durations=[float(duration_years)])
+    return calculate_article_base_case_from_contract(
+        live_contract,
+        duration_years=duration_years,
+        selected_models=selected_models,
+        model_counts=model_counts,
+    )
+
+
+def article_base_case_curve(
+    contract: pd.DataFrame,
+    selected_models: Sequence[str],
+    model_counts: Mapping[str, float] | None = None,
+) -> pd.DataFrame:
+    """Return the article-style burden curve over the exported duration grid."""
+    curve = scenario_curve(
+        contract,
+        selected_models=selected_models,
+        model_counts=model_counts,
+        uptake=1.0,
+        effectiveness=1.0,
+        implementation_cost_per_approached_hpe_gbp=0.0,
+    )
+    curve = curve.copy()
+    curve["article_cost_impact_gbp"] = curve["baseline_incremental_cost_gbp"]
+    curve["article_qaly_impact"] = curve["baseline_incremental_qaly"]
+    return curve
+
+
+def load_published_table3_base_case(table3_path: Path) -> pd.DataFrame:
+    """Read the published Table 3 base-case PSA means for Models A--E."""
+    table3 = pd.read_csv(table3_path)
+    base = table3.loc[table3["scenario"] == "base_case"].copy()
+    if base.shape[0] != 2:
+        raise ValueError("Published Table 3 CSV must contain two base_case rows")
+    cost_row = base.loc[base["metric"] == "total_cost_impact"].iloc[0]
+    qaly_row = base.loc[base["metric"] == "total_qaly_impact"].iloc[0]
+    rows = []
+    for model_id in MODEL_IDS:
+        published_column = PUBLISHED_IDS[model_id]
+        rows.append(
+            {
+                "model_id": model_id,
+                "model_label": MODEL_LABELS[model_id],
+                "published_table3_psa_mean_cost_impact_gbp": float(cost_row[published_column]) * 1_000_000.0,
+                "published_table3_psa_mean_qaly_impact": float(qaly_row[published_column]),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def attach_published_table3_comparison(model_rows: pd.DataFrame, table3_path: Path) -> pd.DataFrame:
+    """Attach published Table 3 PSA means to deterministic live-model rows."""
+    published = load_published_table3_base_case(table3_path)
+    rows = model_rows.merge(published, on=["model_id", "model_label"], how="left", validate="one_to_one")
+    rows["deterministic_cost_impact_gbp"] = rows["baseline_incremental_cost_gbp"]
+    rows["deterministic_qaly_impact"] = rows["baseline_incremental_qaly"]
+    rows["cost_difference_vs_published_psa_mean_gbp"] = (
+        rows["deterministic_cost_impact_gbp"] - rows["published_table3_psa_mean_cost_impact_gbp"]
+    )
+    rows["qaly_difference_vs_published_psa_mean"] = (
+        rows["deterministic_qaly_impact"] - rows["published_table3_psa_mean_qaly_impact"]
+    )
+    return rows
+
+
+def article_reference_is_comparable(
+    contract: pd.DataFrame,
+    duration_years: float,
+    selected_models: Sequence[str],
+    model_counts: Mapping[str, float],
+    atol: float = 1e-6,
+) -> bool:
+    """Return True only when dashboard inputs equal the article England base case."""
+    if abs(float(duration_years) - ARTICLE_BASE_CASE_DEFAULTS["hpe_exposure_duration_years"]) > atol:
+        return False
+    if list(selected_models) != list(MODEL_IDS) and set(selected_models) != set(MODEL_IDS):
+        return False
+    defaults = (
+        contract.sort_values(["duration_years", "model_id"])
+        .drop_duplicates("model_id")
+        .set_index("model_id")["default_england_hpe_count"]
+        .to_dict()
+    )
+    return all(abs(float(model_counts[model_id]) - float(defaults[model_id])) <= atol for model_id in MODEL_IDS)
