@@ -1,0 +1,5 @@
+scenario_id,selected_models,duration_years,scale,uptake,effectiveness,implementation_cost_per_approached_hpe_gbp
+england_all_models,A|B|C|D|E,10.0,1.0,0.60,0.25,0.0
+local_abc_shorter_exposure,A|B|C,1.5,0.10,0.75,0.30,15.0
+oral_anticoagulant_focus,C,2.0,0.50,0.80,0.40,10.0
+hf_ckd_combined,D|E,5.0,1.20,0.40,0.20,25.0
