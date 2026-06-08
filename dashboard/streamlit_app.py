@@ -20,6 +20,10 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from medsid_repro.dashboard_figure2 import (  # noqa: E402
+    load_dashboard_figure2_reference,
+    make_figure2_dashboard_plot,
+)
 from medsid_repro.dashboard_scenario import (  # noqa: E402
     ARTICLE_BASE_CASE_DEFAULTS,
     MODEL_IDS,
@@ -39,6 +43,7 @@ MANIFEST_PATH = ROOT / "dashboard" / "data" / "dashboard_contract_manifest.json"
 WORKBOOK_PATH = ROOT / "sources" / "nsaid_2024_original_workbook_came077880.ww1.xlsm"
 PUBLISHED_TABLE3_PATH = ROOT / "data" / "nsaid_2024_published_table3.csv"
 CACHED_PSA_SUMMARY_PATH = ROOT / "outputs" / "independent_psa" / "figure2_psa_reaggregation_summary.json"
+FIGURE2_DASHBOARD_DATA_DIR = ROOT / "dashboard" / "data"
 
 st.set_page_config(page_title="MedSID NSAID article reproduction", layout="wide")
 
@@ -51,6 +56,11 @@ def load_contract(path: str) -> pd.DataFrame:
 @st.cache_data(show_spinner=False)
 def load_json(path: str) -> dict:
     return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+@st.cache_data(show_spinner=False)
+def load_figure2_reference_cached(data_dir: str):
+    return load_dashboard_figure2_reference(Path(data_dir))
 
 
 @st.cache_data(show_spinner=False)
@@ -254,7 +264,9 @@ if analysis_view == "Article base-case reproduction":
             "One or more inputs differ from the article England base case. Published Table 3 values are shown only as a fixed reference."
         )
 
-    summary_tab, models_tab, validation_tab = st.tabs(["Article summary", "Model comparison", "Validation and scope"])
+    summary_tab, figure2_tab, models_tab, validation_tab = st.tabs(
+        ["Article summary", "Figure 2 PSA cloud", "Model comparison", "Validation and scope"]
+    )
     with summary_tab:
         left, right = st.columns(2)
         with left:
@@ -270,6 +282,69 @@ if analysis_view == "Article base-case reproduction":
                 make_duration_plot(curve, "article_cost_impact_gbp", "article_qaly_impact", "QALY impact"),
                 use_container_width=True,
             )
+
+    with figure2_tab:
+        st.subheader("Figure 2-style PSA cost-QALY cloud")
+        figure2_cloud, figure2_ellipse, figure2_summary = load_figure2_reference_cached(
+            str(FIGURE2_DASHBOARD_DATA_DIR)
+        )
+        deterministic_label = (
+            "Live deterministic base case" if comparable else "Selected deterministic point"
+        )
+        st.pyplot(
+            make_figure2_dashboard_plot(
+                figure2_cloud,
+                figure2_ellipse,
+                published_mean_cost_gbp=published_cost,
+                published_mean_qaly=published_qaly,
+                deterministic_cost_gbp=deterministic_cost,
+                deterministic_qaly=deterministic_qaly,
+                deterministic_label=deterministic_label,
+            ),
+            use_container_width=True,
+        )
+        figure2_metrics = st.columns(4)
+        figure2_metrics[0].metric(
+            "Cached workbook PSA iterations",
+            f"{int(figure2_summary['workbook_cached_iterations']):,}",
+        )
+        figure2_metrics[1].metric(
+            "Cached-workbook PSA mean cost",
+            gbp(float(figure2_summary["cached_workbook_mean_incremental_cost_gbp"])),
+        )
+        figure2_metrics[2].metric(
+            "Cached-workbook PSA mean QALYs",
+            qaly(float(figure2_summary["cached_workbook_mean_incremental_qaly"])),
+        )
+        figure2_metrics[3].metric(
+            "Cached rows with additional NHS cost",
+            percentage(100.0 * float(figure2_summary["cached_workbook_probability_additional_cost"])),
+        )
+        st.info(
+            "The BMJ Figure 2 data cloud was produced from 10,000 simulations. The public workbook stores "
+            "1,000 cached PSA iterations. This tab reaggregates those stored England-level Model A–E outputs in "
+            "Python and redraws the cloud with a 95% ellipse. It is a cached-workbook PSA reference, not a new "
+            "parameter-level 10,000-sample PSA run."
+        )
+        st.caption(
+            "The article reports that 99.94% of its 10,000 simulations suggested additional NHS costs and all "
+            "simulations showed negative health impact. In the 1,000 cached workbook rows shipped with the public "
+            "workbook, both proportions are 100%. The orange diamond is the published Table 3 PSA mean; the white "
+            "circle is the mean of the stored workbook rows; the black X is the selected live deterministic point."
+        )
+        download_cols = st.columns(2)
+        download_cols[0].download_button(
+            "Download cached Figure 2 PSA cloud CSV",
+            data=figure2_cloud.to_csv(index=False).encode("utf-8"),
+            file_name="medsid_figure2_cached_workbook_psa_cloud.csv",
+            mime="text/csv",
+        )
+        download_cols[1].download_button(
+            "Download cached Figure 2 ellipse CSV",
+            data=figure2_ellipse.to_csv(index=False).encode("utf-8"),
+            file_name="medsid_figure2_cached_workbook_psa_ellipse.csv",
+            mime="text/csv",
+        )
 
     with models_tab:
         display_columns = [

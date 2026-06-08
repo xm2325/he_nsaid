@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT))
 from medsid_repro.nsaid_main_figures import reproduce_all
 from medsid_repro.independent_nsaid_abcde import run_independent_models_abcde
 from medsid_repro.independent_nsaid_psa import run_psa_reaggregation
+from medsid_repro.dashboard_figure2 import export_dashboard_figure2_reference
 
 
 def main() -> None:
@@ -34,8 +35,12 @@ def main() -> None:
         workbook_path=workbook,
         output_dir=ROOT / "outputs" / "independent_psa",
     )
+    dashboard_figure2 = export_dashboard_figure2_reference(
+        workbook_path=workbook,
+        output_dir=ROOT / "dashboard" / "data",
+    )
     print("NSAID 2024 workflow completed: article figures, deterministic Models A-E, and PSA re-aggregation")
-    print(json.dumps({"main_figures": main_figures, "independent_models_ABCDE": independent, "psa_reaggregation": psa}, indent=2))
+    print(json.dumps({"main_figures": main_figures, "independent_models_ABCDE": independent, "psa_reaggregation": psa, "dashboard_figure2": dashboard_figure2}, indent=2))
 
 
 if __name__ == "__main__":

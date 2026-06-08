@@ -5,7 +5,7 @@ Run locally:
 ```bash
 python -m pip install -r requirements.txt
 python scripts/export_dashboard_contract.py
-python scripts/check_article_base_case.py
+python scripts/export_dashboard_figure2_reference.py
 streamlit run dashboard/streamlit_app.py
 ```
 
@@ -16,36 +16,10 @@ file path to:
 dashboard/streamlit_app.py
 ```
 
-## Default screen
+The default UI mode reruns the live Python state-transition engines at the article base case.
+The article view also includes a Figure 2-style PSA cost-QALY cloud. The cloud is reaggregated
+in Python from the 1,000 cached PSA rows stored in the public workbook. The BMJ article reports
+10,000 simulations, so the dashboard labels the plot as a cached-workbook reference rather than
+as a new parameter-level PSA run.
 
-The default screen is **Article base-case reproduction** with **Live Python
-state-transition models** selected. It reruns Models A--E from the public
-workbook using the BMJ 2024 base-case settings:
-
-```text
-all five HPE models
-England population scaling
-10-year model horizon
-10-year maximum HPE exposure duration unless an adverse event stops exposure
-English NHS perspective
-2020-21 costs
-3.5% annual discounting for costs and QALYs
-additive-effects assumption
-```
-
-The page compares the live deterministic result with the published Table 3 PSA
-means. These values should not be forced to match exactly: the live point is a
-deterministic reconstruction, while Table 3 reports means from a probabilistic
-sensitivity analysis (PSA).
-
-## Optional screen
-
-The separate **Illustrative intervention scenario** screen retains the v13
-user-defined layer:
-
-```text
-avoided burden = baseline HPE burden × uptake × effectiveness
-```
-
-The intervention effectiveness and implementation cost inputs are not estimated
-by the BMJ 2024 article.
+The optional fast mode reads a versioned duration grid exported from the same Python engines.

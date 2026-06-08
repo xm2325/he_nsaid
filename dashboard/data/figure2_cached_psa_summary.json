@@ -1,0 +1,13 @@
+{
+  "reference": "BMJ 2024 Figure 2-style dashboard redraw from cached public-workbook PSA outputs",
+  "workbook_cached_iterations": 1000,
+  "article_reported_iterations": 10000,
+  "cached_workbook_mean_incremental_cost_gbp": 31197502.33274322,
+  "cached_workbook_mean_incremental_qaly": -6174.5594430818865,
+  "cached_workbook_probability_additional_cost": 1.0,
+  "cached_workbook_probability_negative_qaly": 1.0,
+  "published_article_probability_additional_cost": 0.9994,
+  "published_article_probability_negative_qaly": 1.0,
+  "source_logic": "Read cached England-level Model A--E PSA query outputs from PSA.Data, sum by iteration in Python, and compute a 95% ellipse from the stored cloud.",
+  "scientific_limit": "The public workbook stores 1,000 cached PSA iterations. The article reports 10,000 simulations. This dashboard reference is not a new parameter-level PSA run."
+}
